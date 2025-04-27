@@ -20,23 +20,32 @@ function ziskejDistribucniCeny(distributor, sazba) {
   return distribuce || { vt: 0, nt: 0, ote: 0, systemove: 0 };
 }
 
-// Načítání sazeb podle distributora
+// --- Nově: Načítání distribučních sazeb ---
 const distributorSelect = document.getElementById('distributor');
 const sazbaSelect = document.getElementById('sazba');
 
-distributorSelect.addEventListener('change', () => {
+function naplnSazby() {
   const distributor = distributorSelect.value;
   const dostupneSazby = [...new Set(
-    distribuceCeny.filter(d => d.distributor === distributor)
-                  .map(d => d.sazba)
+    distribuceCeny.filter(item => item.distributor === distributor)
+                  .map(item => item.sazba)
   )];
-  sazbaSelect.innerHTML = dostupneSazby.map(sazba => `<option value="${sazba}">${sazba}</option>`).join('');
-});
 
-// Výpočet
+  sazbaSelect.innerHTML = dostupneSazby.map(
+    sazba => `<option value="${sazba}">${sazba}</option>`
+  ).join('');
+}
+
+// Při změně distributora načíst sazby
+distributorSelect.addEventListener('change', naplnSazby);
+
+// A hned při načtení stránky
+naplnSazby();
+
+// --- Výpočet ---
 document.getElementById('spocitej').addEventListener('click', () => {
-  const distributor = document.getElementById('distributor').value;
-  const sazba = document.getElementById('sazba').value;
+  const distributor = distributorSelect.value;
+  const sazba = sazbaSelect.value;
   const vt = parseFloat(document.getElementById('vt').value) || 0;
   const nt = parseFloat(document.getElementById('nt').value) || 0;
   const cenaVT = parseFloat(document.getElementById('cenaVT').value) || 0;

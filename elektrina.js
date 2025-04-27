@@ -796,4 +796,3 @@ CEZ: {
   { distributor: 'PRE', sazba: 'C62d', faze: 3, min: 51, max: 63, cena: 1038.0 },
   { distributor: 'PRE', sazba: 'C62d', faze: 3, min: 64, max: 999, cenaZaAmp: 1318.0 },
   ];
-};
